@@ -1,6 +1,6 @@
 {
   "name": "Input Cursor Focus",
-  "version": "0.1",
+  "version": "0.1.1",
   "manifest_version": 2,
   "description": "Focuses cursor in first text input if none is focused.",
   "icons": {

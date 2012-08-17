@@ -3,7 +3,7 @@ if (document.activeElement.tagName != "INPUT") {
   focused = false
   for (var i=0; i<inputs.length; i++) {
     var input = inputs[i]
-    if (input.type=="text") {
+    if (elementInViewport(input) && input.type=="text") {
       input.focus()
       focused = true
       break
@@ -11,5 +11,32 @@ if (document.activeElement.tagName != "INPUT") {
   }
   
   if (!focused && inputs.length>0)
-    inputs[0].focus()
+    for (var i=0; i<inputs.length; i++) {
+      var input = inputs[i]
+      if (elementInViewport(input)) {
+	input.focus()
+	focused = true
+	break
+      }
+    }
+}
+
+function elementInViewport(el) {
+  var top = el.offsetTop;
+  var left = el.offsetLeft;
+  var width = el.offsetWidth;
+  var height = el.offsetHeight;
+
+  while(el.offsetParent) {
+    el = el.offsetParent;
+    top += el.offsetTop;
+    left += el.offsetLeft;
+  }
+
+  return (
+    top >= window.pageYOffset &&
+    left >= window.pageXOffset &&
+    (top + height) <= (window.pageYOffset + window.innerHeight) &&
+    (left + width) <= (window.pageXOffset + window.innerWidth)
+  );
 }
